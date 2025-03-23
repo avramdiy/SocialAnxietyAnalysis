@@ -37,7 +37,7 @@ def display_table():
     return html_content.replace('{{ table | safe }}', data_html)
 
 @app.route('/female-anxiety-scatterplot')
-def gender_female_bar_chart():
+def female_anxiety_scatterplot():
     # Filter data for Gender == Female
     female_data = df[df['Gender'] == 'Female']
 
@@ -51,6 +51,36 @@ def gender_female_bar_chart():
     plt.xlabel('Anxiety Level (1-10)')
     plt.ylabel('Caffeine Intake (mg/day)')
     plt.title('Caffeine Intake vs Anxiety Level for Females')
+    plt.grid(True)
+
+    # Save the plot to a BytesIO object
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode()
+    plt.close()
+
+    # Render the table.html with the chart embedded
+    template_path = os.path.join('templates', 'table.html')
+    with open(template_path, 'r') as file:
+        html_content = file.read()
+    return html_content.replace('{{ table | safe }}', f'<img src="data:image/png;base64,{plot_url}" />')
+
+@app.route('/male-anxiety-scatterplot')
+def male_anxiety_scatterplot():
+    # Filter data for Gender == Male
+    female_data = df[df['Gender'] == 'Male']
+
+    # Prepare data for the scatter plot
+    x = female_data['Anxiety Level (1-10)']
+    y = female_data['Caffeine Intake (mg/day)']
+
+    # Create the scatter plot
+    plt.figure(figsize=(10, 6))
+    plt.scatter(x, y, color='skyblue', alpha=0.7, edgecolors='w', s=100)
+    plt.xlabel('Anxiety Level (1-10)')
+    plt.ylabel('Caffeine Intake (mg/day)')
+    plt.title('Caffeine Intake vs Anxiety Level for Males')
     plt.grid(True)
 
     # Save the plot to a BytesIO object
