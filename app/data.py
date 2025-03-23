@@ -8,6 +8,21 @@ app = Flask(__name__)
 data_path = r'C:\Users\Ev\Desktop\TRG Week 16\enhanced_anxiety_dataset.csv'
 df = pd.read_csv(data_path)
 
+if "Occupation" in df.columns:
+    df = df.drop(columns=["Occupation"])
+
+if "Breathing Rate (breaths/min)" in df.columns:
+    df = df.drop(columns=["Breathing Rate (breaths/min)"])
+
+if "Sweating Level (1-5)" in df.columns:
+    df = df.drop(columns=["Sweating Level (1-5)"])
+
+if "Dizziness" in df.columns:
+    df = df.drop(columns=["Dizziness"])
+
+if "Stress Level (1-10)" in df.columns:
+    df = df.drop(columns=["Stress Level (1-10)"])
+
 # Convert the DataFrame to HTML
 data_html = df.to_html(classes='table table-striped', index=False)
 
