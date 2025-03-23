@@ -27,3 +27,5 @@ Data is cleaned and ready for analysis.
 - Added app.route('/male-anxiety-scatterplot') to define the correlation between higher caffeine intake and higher anxiety for males.
 
 # 5th Commit
+
+- Added @app.route('/male-heart-scatterplot') & @app.route('/female-heart-scatterplot') to view the correlation per gender for heart rate and increasing anxiety.
